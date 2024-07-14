@@ -10,6 +10,7 @@
 #define SCREEN_HEIGHT 450
 #define FONT_SIZE 20
 #define CIRCLE_RAD 10
+#define DIR_ARROW_SIZE 50
 
 int lastRand = 0;
 
@@ -30,24 +31,74 @@ std::string join(std::string delimiter, typename T::iterator begin,
       });
 }
 
-void get_bg_text(std::string *msg, int &accel_x, int &accel_y) {
+enum Direction { forward, backward, upward, downward };
+
+Texture2D farrow;
+Texture2D barrow;
+Texture2D uarrow;
+Texture2D darrow;
+
+Texture2D get_direction_texture(Image image) {
+  ImageColorBrightness(&image, 100);
+  Texture2D texture = LoadTextureFromImage(image);
+  UnloadImage(image);
+
+  return texture;
+}
+
+void preload_direction_textures() {
+  std::cout << "fail here--";
+  farrow = get_direction_texture(
+      LoadImageSvg("assets/arrow-forward.svg", DIR_ARROW_SIZE, DIR_ARROW_SIZE));
+
+  std::cout << "Ffail here--";
+  barrow = get_direction_texture(LoadImageSvg("assets/arrow-backward.svg",
+                                              DIR_ARROW_SIZE, DIR_ARROW_SIZE));
+  uarrow = get_direction_texture(
+      LoadImageSvg("assets/arrow-upward.svg", DIR_ARROW_SIZE, DIR_ARROW_SIZE));
+  darrow = get_direction_texture(LoadImageSvg("assets/arrow-downward.svg",
+                                              DIR_ARROW_SIZE, DIR_ARROW_SIZE));
+}
+
+Texture2D *load_direction_texture(Direction dir) {
+  switch (dir) {
+  case Direction::forward:
+    return &farrow;
+  case Direction::backward:
+    return &barrow;
+  case Direction::upward:
+    return &uarrow;
+  case Direction::downward:
+    return &darrow;
+  }
+}
+
+std::vector<Texture2D> set_ui_direction(std::string *msg, int &accel_x,
+                                        int &accel_y) {
   std::vector<std::string> direction;
+  std::vector<Texture2D> ui_arrow_textures;
 
   if (accel_x > 0) {
     direction.push_back("forwards");
+    ui_arrow_textures.push_back(*load_direction_texture(Direction::forward));
   }
   if (accel_x < 0) {
     direction.push_back("backwards");
+    ui_arrow_textures.push_back(*load_direction_texture(Direction::backward));
   }
   if (accel_y < 0) {
     direction.push_back("upwards");
+    ui_arrow_textures.push_back(*load_direction_texture(Direction::upward));
   }
   if (accel_y > 0) {
     direction.push_back("downwards");
+    ui_arrow_textures.push_back(*load_direction_texture(Direction::downward));
   }
 
   *msg = std::format("== {} ==", join<std::vector<std::string>>(
                                      ", ", direction.begin(), direction.end()));
+
+  return ui_arrow_textures;
 }
 
 void collision(Vector2 *ballPosition, int &accel_x, int &accel_y) {
@@ -82,8 +133,15 @@ int main(int argc, char **argv) {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "tiramisu");
   SetTargetFPS(framerate);
 
+  std::cout << "preloading textures.." << std::endl;
+  preload_direction_textures();
+  std::cout << "preload done." << std::endl;
+
   while (!WindowShouldClose()) {
     BeginDrawing();
+
+    /*DrawTexture(arrow_backwards_text, 0, 0, WHITE);*/
+    /*ImageDrawPixel(&arrow_backwards, 0, 0, RAYWHITE);*/
 
     if (IsKeyDown(KEY_RIGHT))
       accel_x = abs(accel_x);
@@ -101,7 +159,14 @@ int main(int argc, char **argv) {
     EndDrawing();
 
     collision(&ballPosition, accel_x, accel_y);
-    get_bg_text(&msg, accel_x, accel_y);
+    std::vector<Texture2D> arrows = set_ui_direction(&msg, accel_x, accel_y);
+
+    int widget_offset = 20;
+    int widget_gap = 60;
+    for (unsigned long i = 0; i < arrows.size(); i++) {
+      DrawTexture(arrows[i], widget_offset + widget_gap * i, 10,
+                  {137, 180, 250, 255});
+    }
 
     const unsigned int text_len = TextLength(msg.c_str()) * FONT_SIZE;
     DrawText(msg.c_str(), ((SCREEN_WIDTH / 2) - (text_len / 4)),
