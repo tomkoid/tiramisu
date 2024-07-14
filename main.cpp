@@ -1,31 +1,14 @@
+#include "collision.hpp"
 #include "framerate.hpp"
 #include "globals.hpp"
-#include "collision.hpp"
+#include "utils.hpp"
 #include <cstdlib>
 #include <format>
 #include <iostream>
-#include <numeric>
 #include <raylib.h>
 #include <vector>
 
 int lastRand = 0;
-
-template <class T>
-std::string join(std::string delimiter, typename T::iterator begin,
-                 typename T::iterator end) {
-
-  if (begin == end) {
-    return std::string();
-  }
-  if (std::next(begin) == end) {
-    return std::string(*begin);
-  }
-  return std::accumulate(
-      std::next(begin), end, *begin,
-      [delimiter](const std::string a, const std::string b) -> std::string {
-        return a + delimiter + b;
-      });
-}
 
 enum Direction { forward, backward, upward, downward };
 
@@ -89,7 +72,7 @@ std::vector<Texture2D> set_ui_direction(std::string *msg, int &accel_x,
     ui_arrow_textures.push_back(*load_direction_texture(Direction::downward));
   }
 
-  *msg = std::format("== {} ==", join<std::vector<std::string>>(
+  *msg = std::format("== {} ==", utils::join<std::vector<std::string>>(
                                      ", ", direction.begin(), direction.end()));
 
   return ui_arrow_textures;

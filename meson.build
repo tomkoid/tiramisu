@@ -8,7 +8,15 @@ xrandr_dep = dependency('xrandr')
 boost_dep = dependency('boost', modules : ['filesystem'])
 raylib_dep = dependency('raylib')
 
-src = ['main.cpp', 'framerate.cpp', 'framerate.hpp', 'collision.hpp', 'collision.cpp', 'globals.hpp']
+src = [
+  'main.cpp',
+  'framerate.cpp',
+  'framerate.hpp',
+  'collision.hpp',
+  'collision.cpp',
+  'globals.hpp',
+  'utils.hpp',
+]
 
 exe = executable('tiramisu', src,
   dependencies : [x11_dep, xrandr_dep, boost_dep, raylib_dep],
