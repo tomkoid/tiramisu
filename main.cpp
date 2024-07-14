@@ -1,16 +1,12 @@
 #include "framerate.hpp"
+#include "globals.hpp"
+#include "collision.hpp"
 #include <cstdlib>
 #include <format>
 #include <iostream>
 #include <numeric>
 #include <raylib.h>
 #include <vector>
-
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 450
-#define FONT_SIZE 20
-#define CIRCLE_RAD 10
-#define DIR_ARROW_SIZE 50
 
 int lastRand = 0;
 
@@ -97,22 +93,6 @@ std::vector<Texture2D> set_ui_direction(std::string *msg, int &accel_x,
                                      ", ", direction.begin(), direction.end()));
 
   return ui_arrow_textures;
-}
-
-void collision(Vector2 *ballPosition, int &accel_x, int &accel_y) {
-  if (ballPosition->y + CIRCLE_RAD >= SCREEN_HEIGHT) {
-    std::cout << "direction: reverse accel_y" << std::endl;
-    accel_y = -accel_y;
-  } else if (ballPosition->x + CIRCLE_RAD >= SCREEN_WIDTH) {
-    std::cout << "direction: reverse accel_x" << std::endl;
-    accel_x = -accel_x;
-  } else if (ballPosition->y - CIRCLE_RAD <= 0) {
-    std::cout << "direction: reverse accel_y" << std::endl;
-    accel_y = -accel_y;
-  } else if (ballPosition->x - CIRCLE_RAD <= 0) {
-    std::cout << "direction: reverse accel_x" << std::endl;
-    accel_x = -accel_x;
-  }
 }
 
 int main(int argc, char **argv) {
