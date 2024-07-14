@@ -47,11 +47,9 @@ Texture2D get_direction_texture(Image image) {
 }
 
 void preload_direction_textures() {
-  std::cout << "fail here--";
   farrow = get_direction_texture(
       LoadImageSvg("assets/arrow-forward.svg", DIR_ARROW_SIZE, DIR_ARROW_SIZE));
 
-  std::cout << "Ffail here--";
   barrow = get_direction_texture(LoadImageSvg("assets/arrow-backward.svg",
                                               DIR_ARROW_SIZE, DIR_ARROW_SIZE));
   uarrow = get_direction_texture(
