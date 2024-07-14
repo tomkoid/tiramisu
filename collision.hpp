@@ -2,6 +2,6 @@
 #define COLLISION_H
 
 #include <raylib.h>
-void collision(Vector2 *ballPosition, int &accel_x, int &accel_y);
+void collision(Vector2 *ballPosition, float &accel_x, float &accel_y);
 
 #endif

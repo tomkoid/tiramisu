@@ -6,6 +6,7 @@
 #include <format>
 #include <iostream>
 #include <raylib.h>
+#include <string>
 #include <vector>
 
 int lastRand = 0;
@@ -50,8 +51,8 @@ Texture2D *load_direction_texture(Direction dir) {
   }
 }
 
-std::vector<Texture2D> set_ui_direction(std::string *msg, int &accel_x,
-                                        int &accel_y) {
+std::vector<Texture2D> set_ui_direction(std::string *msg, float &accel_x,
+                                        float &accel_y) {
   std::vector<std::string> direction;
   std::vector<Texture2D> ui_arrow_textures;
 
@@ -86,11 +87,12 @@ int main(int argc, char **argv) {
 
   int framerate = get_framerate();
   std::string msg = "== first, frame ==";
-  int accel_x = 4;
-  int accel_y = 4;
+  float accel_x = 4.0;
+  float accel_y = 4.0;
 
   Vector2 ballPosition = {(float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2};
 
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "tiramisu");
   SetTargetFPS(framerate);
 
@@ -98,20 +100,26 @@ int main(int argc, char **argv) {
   preload_direction_textures();
   std::cout << "preload done." << std::endl;
 
+  screenWidth = SCREEN_HEIGHT;
+  screenHeight = SCREEN_HEIGHT;
+
   while (!WindowShouldClose()) {
+    screenWidth = GetScreenWidth();
+    screenHeight = GetScreenHeight();
+
     BeginDrawing();
 
     /*DrawTexture(arrow_backwards_text, 0, 0, WHITE);*/
     /*ImageDrawPixel(&arrow_backwards, 0, 0, RAYWHITE);*/
 
     if (IsKeyDown(KEY_RIGHT))
-      accel_x = abs(accel_x);
+      accel_x = std::abs(accel_x);
     if (IsKeyDown(KEY_LEFT))
-      accel_x = -abs(accel_x);
+      accel_x = -std::abs(accel_x);
     if (IsKeyDown(KEY_UP))
-      accel_y = -abs(accel_y);
+      accel_y = -std::abs(accel_y);
     if (IsKeyDown(KEY_DOWN))
-      accel_y = abs(accel_y);
+      accel_y = std::abs(accel_y);
 
     ClearBackground({30, 30, 46, 255});
 
@@ -129,9 +137,17 @@ int main(int argc, char **argv) {
                   {137, 180, 250, 255});
     }
 
+    // directions at center
     const unsigned int text_len = TextLength(msg.c_str()) * FONT_SIZE;
-    DrawText(msg.c_str(), ((SCREEN_WIDTH / 2) - (text_len / 4)),
-             SCREEN_HEIGHT / 2, FONT_SIZE, {88, 91, 112, 255});
+    DrawText(msg.c_str(), ((screenWidth / 2) - (text_len / 4)),
+             screenHeight / 2, FONT_SIZE, {88, 91, 112, 255});
+
+    const unsigned int speed_len =
+        TextLength(std::to_string(accel_y).c_str()) + TextLength("accel_z: ") * FONT_SIZE;
+    DrawText(std::format("accel_x: {}", accel_x).c_str(), screenWidth - speed_len,
+             screenHeight - FONT_SIZE, FONT_SIZE, WHITE);
+    DrawText(std::format("accel_y: {}", accel_y).c_str(), screenWidth - speed_len,
+             screenHeight - FONT_SIZE * 2, FONT_SIZE, WHITE);
 
     ballPosition.x += accel_x;
     ballPosition.y += accel_y;

@@ -7,4 +7,7 @@
 #define CIRCLE_RAD 10
 #define DIR_ARROW_SIZE 50
 
+inline int screenWidth;
+inline int screenHeight;
+
 #endif
