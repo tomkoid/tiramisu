@@ -16,6 +16,8 @@ src = [
   'collision.cpp',
   'globals.hpp',
   'utils.hpp',
+  'textures.cpp',
+  'textures.hpp',
 ]
 
 exe = executable('tiramisu', src,
