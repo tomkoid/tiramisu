@@ -40,6 +40,14 @@ std::vector<Texture2D> set_ui_direction(std::string *msg, float &accel_x,
   return ui_arrow_textures;
 }
 
+float increment_speed(float accel_var, float accel_adder) {
+  if (accel_var > 0) {
+    return accel_var + accel_adder;
+  } else if (accel_var < 0) {
+    return accel_var - accel_adder;
+  }
+}
+
 int main(int argc, char **argv) {
   if (argc != 1) {
     std::cout << argv[0] << "takes no arguments.\n";
@@ -94,14 +102,16 @@ int main(int argc, char **argv) {
 
     EndDrawing();
 
-    collision(&ballPosition, wall_bounces, accel_x, accel_y);
+    bool collided = collision(&ballPosition, wall_bounces, accel_x, accel_y);
     std::vector<Texture2D> arrows = set_ui_direction(&msg, accel_x, accel_y);
 
     int widget_offset = 20;
     int widget_gap = 60;
-    for (unsigned long i = 0; i < arrows.size(); i++) {
-      DrawTexture(arrows[i], widget_offset + widget_gap * i, 10,
+    int i = 0;
+    for (Texture2D arrow : arrows) {
+      DrawTexture(arrow, widget_offset + widget_gap * i, 10,
                   {137, 180, 250, 255});
+      i++;
     }
 
     // directions at center
@@ -119,7 +129,16 @@ int main(int argc, char **argv) {
              screenHeight - FONT_SIZE * 2, FONT_SIZE, {88, 91, 112, 255});
 
     // draw bounces
-    DrawText(std::to_string(wall_bounces).c_str(), screenWidth - TextLength(std::to_string(wall_bounces).c_str()) * FONT_SIZE - widget_offset, 0 + FONT_SIZE, FONT_SIZE *2, WHITE);
+    DrawText(std::to_string(wall_bounces).c_str(),
+             screenWidth -
+                 TextLength(std::to_string(wall_bounces).c_str()) * FONT_SIZE -
+                 widget_offset,
+             0 + FONT_SIZE, FONT_SIZE * 2, WHITE);
+
+    if (collided) {
+      accel_x = increment_speed(accel_x, 0.001);
+      accel_y = increment_speed(accel_y, 0.001);
+    }
 
     ballPosition.x += accel_x;
     ballPosition.y += accel_y;
