@@ -23,9 +23,9 @@ int get_framerate() {
 
   int current_width = xrrs[current_size_id].width;
   int current_height = xrrs[current_size_id].height;
-  std::cout << "current_rate = " << current_rate << std::endl;
-  std::cout << "current_width = " << current_width << std::endl;
-  std::cout << "current_height = " << current_height << std::endl;
+  std::cout << "X11: current monitor framerate: " << current_rate << std::endl;
+  std::cout << "X11: current monitor width: " << current_width << std::endl;
+  std::cout << "X11: current monitor height: " << current_height << std::endl;
 
   XCloseDisplay(dpy);
 
