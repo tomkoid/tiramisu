@@ -1,8 +1,8 @@
 #include "collision.hpp"
 #include "framerate.hpp"
 #include "globals.hpp"
-#include "utils.hpp"
 #include "textures.hpp"
+#include "utils.hpp"
 #include <cstdlib>
 #include <format>
 #include <iostream>
@@ -50,6 +50,7 @@ int main(int argc, char **argv) {
   std::string msg = "== first, frame ==";
   float accel_x = 4.0;
   float accel_y = 4.0;
+  int wall_bounces = 0;
 
   Vector2 ballPosition = {(float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2};
 
@@ -93,7 +94,7 @@ int main(int argc, char **argv) {
 
     EndDrawing();
 
-    collision(&ballPosition, accel_x, accel_y);
+    collision(&ballPosition, wall_bounces, accel_x, accel_y);
     std::vector<Texture2D> arrows = set_ui_direction(&msg, accel_x, accel_y);
 
     int widget_offset = 20;
@@ -116,6 +117,9 @@ int main(int argc, char **argv) {
     DrawText(std::format("Acceleration Y: {}", accel_y).c_str(),
              screenWidth - speed_len - widget_offset,
              screenHeight - FONT_SIZE * 2, FONT_SIZE, {88, 91, 112, 255});
+
+    // draw bounces
+    DrawText(std::to_string(wall_bounces).c_str(), screenWidth - TextLength(std::to_string(wall_bounces).c_str()) * FONT_SIZE - widget_offset, 0 + FONT_SIZE, FONT_SIZE *2, WHITE);
 
     ballPosition.x += accel_x;
     ballPosition.y += accel_y;
