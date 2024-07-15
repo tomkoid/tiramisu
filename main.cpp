@@ -104,13 +104,18 @@ int main(int argc, char **argv) {
   screenHeight = SCREEN_HEIGHT;
 
   while (!WindowShouldClose()) {
+    if (GetScreenWidth() != screenWidth) {
+      int tmpFramerate = get_framerate();
+      if (tmpFramerate != framerate) {
+        SetTargetFPS(tmpFramerate);
+        framerate = tmpFramerate;
+      }
+    }
+
     screenWidth = GetScreenWidth();
     screenHeight = GetScreenHeight();
 
     BeginDrawing();
-
-    /*DrawTexture(arrow_backwards_text, 0, 0, WHITE);*/
-    /*ImageDrawPixel(&arrow_backwards, 0, 0, RAYWHITE);*/
 
     if (IsKeyDown(KEY_RIGHT))
       accel_x = std::abs(accel_x);
@@ -145,11 +150,11 @@ int main(int argc, char **argv) {
     const unsigned int speed_len = TextLength(std::to_string(accel_y).c_str()) +
                                    TextLength("Acceleration Z: ") * FONT_SIZE;
     DrawText(std::format("Acceleration X: {}", accel_x).c_str(),
-             screenWidth - speed_len - widget_offset, screenHeight - FONT_SIZE, FONT_SIZE,
-             {88, 91, 112, 255});
+             screenWidth - speed_len - widget_offset, screenHeight - FONT_SIZE,
+             FONT_SIZE, {88, 91, 112, 255});
     DrawText(std::format("Acceleration Y: {}", accel_y).c_str(),
-             screenWidth - speed_len - widget_offset, screenHeight - FONT_SIZE * 2, FONT_SIZE,
-             {88, 91, 112, 255});
+             screenWidth - speed_len - widget_offset,
+             screenHeight - FONT_SIZE * 2, FONT_SIZE, {88, 91, 112, 255});
 
     ballPosition.x += accel_x;
     ballPosition.y += accel_y;
