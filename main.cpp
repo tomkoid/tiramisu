@@ -142,12 +142,14 @@ int main(int argc, char **argv) {
     DrawText(msg.c_str(), ((screenWidth / 2) - (text_len / 4)),
              screenHeight / 2, FONT_SIZE, {88, 91, 112, 255});
 
-    const unsigned int speed_len =
-        TextLength(std::to_string(accel_y).c_str()) + TextLength("accel_z: ") * FONT_SIZE;
-    DrawText(std::format("accel_x: {}", accel_x).c_str(), screenWidth - speed_len,
-             screenHeight - FONT_SIZE, FONT_SIZE, WHITE);
-    DrawText(std::format("accel_y: {}", accel_y).c_str(), screenWidth - speed_len,
-             screenHeight - FONT_SIZE * 2, FONT_SIZE, WHITE);
+    const unsigned int speed_len = TextLength(std::to_string(accel_y).c_str()) +
+                                   TextLength("Acceleration Z: ") * FONT_SIZE;
+    DrawText(std::format("Acceleration X: {}", accel_x).c_str(),
+             screenWidth - speed_len - widget_offset, screenHeight - FONT_SIZE, FONT_SIZE,
+             {88, 91, 112, 255});
+    DrawText(std::format("Acceleration Y: {}", accel_y).c_str(),
+             screenWidth - speed_len - widget_offset, screenHeight - FONT_SIZE * 2, FONT_SIZE,
+             {88, 91, 112, 255});
 
     ballPosition.x += accel_x;
     ballPosition.y += accel_y;
