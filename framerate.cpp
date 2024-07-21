@@ -30,7 +30,6 @@ int get_framerate() {
   /**/
   /*XCloseDisplay(dpy);*/
 
-  /*std::cout << "test";*/
   std::vector<int> refreshRates;
   for (int i = 0; i<GetMonitorCount(); i++) {
     refreshRates.push_back(GetMonitorRefreshRate(i));

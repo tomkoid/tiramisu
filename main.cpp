@@ -120,8 +120,8 @@ int main(int argc, char **argv) {
       accel_y = increment_speed(accel_y, 0.001);
     }
 
-    ballPosition.x += accel_x;
-    ballPosition.y += accel_y;
+    ballPosition.x += accel_x * ((float)BASE_REFRESHRATE/GetFPS());
+    ballPosition.y += accel_y * ((float)BASE_REFRESHRATE/GetFPS());
   }
 
   CloseWindow();
