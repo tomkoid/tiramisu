@@ -13,6 +13,7 @@ src = [
   'framerate.cpp',
   'collision.cpp',
   'textures.cpp',
+  'ui.cpp',
 ]
 
 exe = executable('tiramisu', src,

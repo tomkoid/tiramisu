@@ -2,7 +2,7 @@
 #include "framerate.h"
 #include "globals.h"
 #include "textures.h"
-#include "utils.h"
+#include "ui.h"
 #include <cstdlib>
 #include <format>
 #include <iostream>
@@ -12,39 +12,13 @@
 
 int lastRand = 0;
 
-std::vector<Texture2D> set_ui_direction(std::string *msg, float &accel_x,
-                                        float &accel_y) {
-  std::vector<std::string> direction;
-  std::vector<Texture2D> ui_arrow_textures;
-
-  if (accel_x > 0) {
-    direction.push_back("forwards");
-    ui_arrow_textures.push_back(*load_direction_texture(Direction::forward));
-  }
-  if (accel_x < 0) {
-    direction.push_back("backwards");
-    ui_arrow_textures.push_back(*load_direction_texture(Direction::backward));
-  }
-  if (accel_y < 0) {
-    direction.push_back("upwards");
-    ui_arrow_textures.push_back(*load_direction_texture(Direction::upward));
-  }
-  if (accel_y > 0) {
-    direction.push_back("downwards");
-    ui_arrow_textures.push_back(*load_direction_texture(Direction::downward));
-  }
-
-  *msg = std::format("== {} ==", utils::join<std::vector<std::string>>(
-                                     ", ", direction.begin(), direction.end()));
-
-  return ui_arrow_textures;
-}
-
 float increment_speed(float accel_var, float accel_adder) {
   if (accel_var > 0) {
     return accel_var + accel_adder;
   } else if (accel_var < 0) {
     return accel_var - accel_adder;
+  } else {
+    return accel_var;
   }
 }
 
@@ -63,6 +37,7 @@ int main(int argc, char **argv) {
   Vector2 ballPosition = {(float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2};
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+  SetConfigFlags(FLAG_WINDOW_MOUSE_PASSTHROUGH);
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "tiramisu");
   SetTargetFPS(framerate);
 
@@ -73,8 +48,13 @@ int main(int argc, char **argv) {
   screenWidth = SCREEN_HEIGHT;
   screenHeight = SCREEN_HEIGHT;
 
+  HideCursor();
+
   while (!WindowShouldClose()) {
-    if (GetScreenWidth() != screenWidth) {
+    int screenWidthTmp = GetScreenWidth();
+    int screenHeightTmp = GetScreenHeight();
+
+    if (screenWidthTmp != screenWidth) {
       int tmpFramerate = get_framerate();
       if (tmpFramerate != framerate) {
         SetTargetFPS(tmpFramerate);
@@ -82,8 +62,11 @@ int main(int argc, char **argv) {
       }
     }
 
-    screenWidth = GetScreenWidth();
-    screenHeight = GetScreenHeight();
+    if (screenWidthTmp != screenWidth || screenHeightTmp != screenHeight) {
+      SetWindowSize(screenWidthTmp, screenHeightTmp);
+      screenWidth = screenWidthTmp;
+      screenHeight = screenHeightTmp;
+    }
 
     BeginDrawing();
 
