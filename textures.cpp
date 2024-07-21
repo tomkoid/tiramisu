@@ -1,6 +1,7 @@
-#include "textures.hpp"
-#include "collision.hpp"
-#include "globals.hpp"
+#include "textures.h"
+#include "collision.h"
+#include "globals.h"
+#include <cstddef>
 #include <raylib.h>
 
 Texture2D get_direction_texture(Image image) {
@@ -34,4 +35,6 @@ Texture2D *load_direction_texture(Direction dir) {
   case Direction::downward:
     return &darrow;
   }
+
+  return NULL;
 }

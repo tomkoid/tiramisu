@@ -1,7 +1,7 @@
 #ifndef TEXTURES_H
 #define TEXTURES_H
 
-#include "collision.hpp"
+#include "collision.h"
 #include <raylib.h>
 inline Texture2D farrow;
 inline Texture2D barrow;

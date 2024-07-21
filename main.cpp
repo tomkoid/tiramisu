@@ -1,8 +1,8 @@
-#include "collision.hpp"
-#include "framerate.hpp"
-#include "globals.hpp"
-#include "textures.hpp"
-#include "utils.hpp"
+#include "collision.h"
+#include "framerate.h"
+#include "globals.h"
+#include "textures.h"
+#include "utils.h"
 #include <cstdlib>
 #include <format>
 #include <iostream>
