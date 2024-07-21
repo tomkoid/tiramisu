@@ -11,13 +11,8 @@ raylib_dep = dependency('raylib')
 src = [
   'main.cpp',
   'framerate.cpp',
-  'framerate.hpp',
-  'collision.hpp',
   'collision.cpp',
-  'globals.hpp',
-  'utils.hpp',
   'textures.cpp',
-  'textures.hpp',
 ]
 
 exe = executable('tiramisu', src,
