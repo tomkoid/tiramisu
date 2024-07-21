@@ -37,7 +37,6 @@ int main(int argc, char **argv) {
   Vector2 ballPosition = {(float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2};
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  SetConfigFlags(FLAG_WINDOW_MOUSE_PASSTHROUGH);
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "tiramisu");
   SetTargetFPS(framerate);
 
@@ -47,8 +46,6 @@ int main(int argc, char **argv) {
 
   screenWidth = SCREEN_HEIGHT;
   screenHeight = SCREEN_HEIGHT;
-
-  HideCursor();
 
   while (!WindowShouldClose()) {
     int screenWidthTmp = GetScreenWidth();

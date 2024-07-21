@@ -1,8 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <climits>
 #include <numeric>
 #include <string>
+#include <vector>
 
 namespace utils {
 template <class T>
@@ -21,6 +23,7 @@ std::string join(std::string delimiter, typename T::iterator begin,
         return a + delimiter + b;
       });
 }
+int maxAt(std::vector<int> &vector_name);
 } // namespace utils
 
 #endif // !UTILS_H
