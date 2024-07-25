@@ -1,0 +1,32 @@
+name: Build game
+run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
+on: [push]
+
+jobs:
+  build:
+    runs-on: docker
+    container:
+      image: alpine:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          apk add meson ninja gcc g++ boost-dev raylib-dev nodejs npm git openssl openssl-dev openssl-dbg pkgconf
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Setup directory 
+        run: |
+          meson setup build
+      - name: Build code 
+        run: |
+          meson compile -C build 
+      - name: Publish release  
+        uses: https://gitea.com/akkuman/gitea-release-action@v1
+        with:
+          files: |-
+            build/tiramisu
+          name: 'ci build'
+          tag_name: 'cibuild'
+          token: '${{secrets.RELEASE_TOKEN}}'
+          api_key: '${{secrets.RELEASE_TOKEN}}'
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
