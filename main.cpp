@@ -36,13 +36,18 @@ int main(int argc, char **argv) {
 
   Vector2 ballPosition = {(float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2};
 
+  InitAudioDevice();
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "tiramisu");
   SetTargetFPS(framerate);
 
   std::cout << "preloading textures.." << std::endl;
   preload_direction_textures();
+
+  Wave bounceSoundWave = LoadWave("assets/bounce.wav");
+  Sound bounceSound = LoadSoundFromWave(bounceSoundWave);
   std::cout << "preload done." << std::endl;
+
 
   screenWidth = SCREEN_HEIGHT;
   screenHeight = SCREEN_HEIGHT;
@@ -118,12 +123,19 @@ int main(int argc, char **argv) {
     if (collided) {
       accel_x = increment_speed(accel_x, 0.001);
       accel_y = increment_speed(accel_y, 0.001);
+
+      if (IsAudioDeviceReady() && IsWaveReady(bounceSoundWave) && IsSoundReady(bounceSound)) {
+        PlaySound(bounceSound);
+      }
     }
 
-    ballPosition.x += accel_x * ((float)BASE_REFRESHRATE/GetFPS());
-    ballPosition.y += accel_y * ((float)BASE_REFRESHRATE/GetFPS());
+    ballPosition.x += accel_x * ((float)BASE_REFRESHRATE / GetFPS());
+    ballPosition.y += accel_y * ((float)BASE_REFRESHRATE / GetFPS());
   }
 
+  UnloadSound(bounceSound);
+
+  CloseAudioDevice();
   CloseWindow();
 
   return 0;
