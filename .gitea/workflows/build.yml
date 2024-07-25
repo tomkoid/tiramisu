@@ -19,12 +19,13 @@ jobs:
       - name: Build code 
         run: |
           meson compile -C build 
-      # - name: Publish release  
-      #   uses: https://gitea.com/akkuman/gitea-release-action@v1
-      #   with:
-      #     files: |-
-      #       build/tiramisu
-      #     token: '${{secrets.RELEASE_TOKEN}}'
-          # api_key: '${{secrets.RELEASE_TOKEN}}'
+      - name: Publish release  
+        uses: https://gitea.com/akkuman/gitea-release-action@v1
+        with:
+          files: |-
+            build/tiramisu
+          name: 'dev arm build'
+          token: '${{secrets.RELEASE_TOKEN}}'
+          api_key: '${{secrets.RELEASE_TOKEN}}'
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
