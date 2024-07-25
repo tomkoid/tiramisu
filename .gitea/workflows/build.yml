@@ -24,7 +24,8 @@ jobs:
         with:
           files: |-
             build/tiramisu
-          name: 'dev arm build'
+          name: 'ci build'
+          tag_name: 'cibuild'
           token: '${{secrets.RELEASE_TOKEN}}'
           api_key: '${{secrets.RELEASE_TOKEN}}'
 
