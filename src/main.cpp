@@ -71,13 +71,14 @@ int main(int argc, char **argv) {
 
     BeginDrawing();
 
-    if (IsKeyDown(KEY_RIGHT))
+    // direction control
+    if (IsKeyPressed(KEY_RIGHT))
       accel_x = std::abs(accel_x);
-    if (IsKeyDown(KEY_LEFT))
+    if (IsKeyPressed(KEY_LEFT))
       accel_x = -std::abs(accel_x);
-    if (IsKeyDown(KEY_UP))
+    if (IsKeyPressed(KEY_UP))
       accel_y = -std::abs(accel_y);
-    if (IsKeyDown(KEY_DOWN))
+    if (IsKeyPressed(KEY_DOWN))
       accel_y = std::abs(accel_y);
 
     // volume control
