@@ -3,6 +3,11 @@
 
 #include <raylib.h>
 #include <chrono>
-void handleVolumeControls(bool &showVolume, std::chrono::time_point<std::chrono::steady_clock> &showVolumeTimeDone);
 
-#endif // !VOLUME_H
+namespace controls {
+void handleVolumeControls(
+    bool &showVolume,
+    std::chrono::time_point<std::chrono::steady_clock> &showVolumeTimeDone);
+}
+
+#endif  // !VOLUME_H

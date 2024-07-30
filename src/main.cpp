@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
       accel_y = std::abs(accel_y);
 
     // volume control
-    handleVolumeControls(showVolume, showVolumeTimeDone);
+    controls::handleVolumeControls(showVolume, showVolumeTimeDone);
 
     ClearBackground({30, 30, 46, 255});
 
@@ -128,6 +128,13 @@ int main(int argc, char **argv) {
                  widget_offset,
              0 + FONT_SIZE, FONT_SIZE * 2, WHITE);
 
+    if (showVolume && std::chrono::steady_clock::now() < showVolumeTimeDone) {
+      DrawText(std::format("Volume: {:.0f} %", GetMasterVolume() * 100).c_str(),
+               10, 10, FONT_SIZE, {88, 91, 112, 255});
+    } else {
+      showVolume = false;
+    }
+
     if (collided) {
       accel_x = increment_speed(accel_x, 0.001);
       accel_y = increment_speed(accel_y, 0.001);
@@ -140,13 +147,6 @@ int main(int argc, char **argv) {
 
     ballPosition.x += accel_x * ((float)BASE_REFRESHRATE / GetFPS());
     ballPosition.y += accel_y * ((float)BASE_REFRESHRATE / GetFPS());
-  }
-
-  if (showVolume && std::chrono::steady_clock::now() < showVolumeTimeDone) {
-    DrawText(std::format("Volume: {:.0f} %", GetMasterVolume() * 100).c_str(),
-             10, 10, FONT_SIZE, {88, 91, 112, 255});
-  } else {
-    showVolume = false;
   }
 
   UnloadSound(bounceSound);

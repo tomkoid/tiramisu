@@ -12,6 +12,7 @@ void toggleShowVolume(
       std::chrono::steady_clock::now() + std::chrono::seconds(1);
 }
 
+namespace controls {
 void handleVolumeControls(
     bool &showVolume,
     std::chrono::time_point<std::chrono::steady_clock> &showVolumeTimeDone) {
@@ -44,3 +45,4 @@ void handleVolumeControls(
               << std::endl;
   }
 }
+}  // namespace controls
