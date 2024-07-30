@@ -82,9 +82,12 @@ int main(int argc, char **argv) {
       accel_y = std::abs(accel_y);
 
     // volume control
-    /*if (IsKeyPressed(KEY_MINUS)) {*/
-    /*  SetSoundVolume(bounceSound, 0.1f);*/
-    /*}*/
+    if (IsKeyPressed(KEY_MINUS)) {
+      SetMasterVolume(GetMasterVolume() - 0.1f);
+    }
+    if (IsKeyPressed(KEY_EQUAL)) {
+      SetMasterVolume(GetMasterVolume() + 0.1f);
+    }
 
     ClearBackground({30, 30, 46, 255});
 
