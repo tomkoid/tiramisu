@@ -13,6 +13,10 @@ src = [
   'src/ui.cpp',
   'src/utils.cpp',
   'src/controls/volume.cpp',
+  'src/ui/center_directions.cpp',
+  'src/ui/acceleration.cpp',
+  'src/ui/bounces.cpp',
+  'src/ui/volume.cpp',
 ]
 
 exe = executable('tiramisu', src,

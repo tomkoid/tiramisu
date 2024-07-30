@@ -11,4 +11,7 @@
 inline int screenWidth;
 inline int screenHeight;
 
+inline const int widget_offset = 20;
+inline const int widget_gap = 60;
+
 #endif

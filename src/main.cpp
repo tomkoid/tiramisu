@@ -2,15 +2,19 @@
 #include <chrono>
 #include <cmath>
 #include <cstdlib>
-#include <format>
 #include <iostream>
 #include <string>
 #include <vector>
 #include "collision.h"
 #include "globals.h"
 #include "src/controls/volume.h"
+#include "src/ui/volume.h"
 #include "textures.h"
 #include "ui.h"
+#include "ui/acceleration.h"
+#include "ui/bounces.h"
+#include "ui/center_directions.h"
+#include "ui/volume.h"
 #include "utils.h"
 
 int lastRand = 0;
@@ -98,8 +102,6 @@ int main(int argc, char **argv) {
     bool collided = collision(&ballPosition, wall_bounces, accel_x, accel_y);
     std::vector<Texture2D> arrows = set_ui_direction(&msg, accel_x, accel_y);
 
-    int widget_offset = 20;
-    int widget_gap = 60;
     int i = 0;
     for (Texture2D arrow : arrows) {
       DrawTexture(arrow, widget_offset + widget_gap * i, 10,
@@ -108,29 +110,16 @@ int main(int argc, char **argv) {
     }
 
     // directions at center
-    const unsigned int text_len = TextLength(msg.c_str()) * FONT_SIZE;
-    DrawText(msg.c_str(), ((screenWidth / 2) - (text_len / 4)),
-             screenHeight / 2, FONT_SIZE, {88, 91, 112, 255});
+    ui::drawCenterDirections(msg);
 
-    const unsigned int speed_len = TextLength(std::to_string(accel_y).c_str()) +
-                                   TextLength("Acceleration Z: ") * FONT_SIZE;
-    DrawText(std::format("Acceleration X: {}", accel_x).c_str(),
-             screenWidth - speed_len - widget_offset, screenHeight - FONT_SIZE,
-             FONT_SIZE, {88, 91, 112, 255});
-    DrawText(std::format("Acceleration Y: {}", accel_y).c_str(),
-             screenWidth - speed_len - widget_offset,
-             screenHeight - FONT_SIZE * 2, FONT_SIZE, {88, 91, 112, 255});
+    // acceleration controls
+    ui::drawAccelerationControls(accel_x, accel_y);
 
     // draw bounces
-    DrawText(std::to_string(wall_bounces).c_str(),
-             screenWidth -
-                 TextLength(std::to_string(wall_bounces).c_str()) * FONT_SIZE -
-                 widget_offset,
-             0 + FONT_SIZE, FONT_SIZE * 2, WHITE);
+    ui::drawBounces(wall_bounces);
 
     if (showVolume && std::chrono::steady_clock::now() < showVolumeTimeDone) {
-      DrawText(std::format("Volume: {:.0f} %", GetMasterVolume() * 100).c_str(),
-               10, 10, FONT_SIZE, {88, 91, 112, 255});
+      ui::drawVolume();
     } else {
       showVolume = false;
     }
