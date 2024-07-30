@@ -7,12 +7,11 @@ boost_dep = dependency('boost', modules : ['filesystem'])
 raylib_dep = dependency('raylib')
 
 src = [
-  'main.cpp',
-  'framerate.cpp',
-  'collision.cpp',
-  'textures.cpp',
-  'ui.cpp',
-  'utils.cpp',
+  'src/main.cpp',
+  'src/collision.cpp',
+  'src/textures.cpp',
+  'src/ui.cpp',
+  'src/utils.cpp',
 ]
 
 exe = executable('tiramisu', src,

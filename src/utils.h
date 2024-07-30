@@ -23,7 +23,8 @@ std::string join(std::string delimiter,
         return a + delimiter + b;
       });
 }
-int maxAt(std::vector<int> &vector_name);
+int maxAt(std::vector<int>& vector_name);
+int getFramerate();
 }  // namespace utils
 
 #endif  // !UTILS_H

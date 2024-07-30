@@ -5,10 +5,10 @@
 const int RESET_OFFSET = 1;
 
 // returns if collided
-bool collision(Vector2 *ballPosition,
-               int &wall_bounces,
-               float &accel_x,
-               float &accel_y) {
+bool collision(Vector2* ballPosition,
+               int& wall_bounces,
+               float& accel_x,
+               float& accel_y) {
   bool collided = false;
 
   // reverse direction

@@ -1,3 +1,4 @@
+#include <raylib.h>
 #include <climits>
 #include <vector>
 
@@ -9,5 +10,14 @@ int maxAt(std::vector<int> &vector_name) {
       max = val;
   }
   return max;
+}
+
+int getFramerate() {
+  std::vector<int> refreshRates;
+  for (int i = 0; i < GetMonitorCount(); i++) {
+    refreshRates.push_back(GetMonitorRefreshRate(i));
+  }
+
+  return utils::maxAt(refreshRates);
 }
 }  // namespace utils

@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 #include "collision.h"
-#include "framerate.h"
 #include "globals.h"
 #include "textures.h"
 #include "ui.h"
+#include "utils.h"
 
 int lastRand = 0;
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  int framerate = get_framerate();
+  int framerate = utils::getFramerate();
   std::string msg = "== first, frame ==";
   float accel_x = 4.0;
   float accel_y = 4.0;
@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
     int screenHeightTmp = GetScreenHeight();
 
     if (screenWidthTmp != screenWidth) {
-      int tmpFramerate = get_framerate();
+      int tmpFramerate = utils::getFramerate();
       if (tmpFramerate != framerate) {
         SetTargetFPS(tmpFramerate);
         framerate = tmpFramerate;
@@ -79,6 +79,11 @@ int main(int argc, char **argv) {
       accel_y = -std::abs(accel_y);
     if (IsKeyDown(KEY_DOWN))
       accel_y = std::abs(accel_y);
+
+    // volume control
+    /*if (IsKeyPressed(KEY_MINUS)) {*/
+    /*  SetSoundVolume(bounceSound, 0.1f);*/
+    /*}*/
 
     ClearBackground({30, 30, 46, 255});
 
