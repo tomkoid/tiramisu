@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <climits>
+#include <cmath>
 #include <vector>
 
 namespace utils {
@@ -19,5 +20,10 @@ int getFramerate() {
   }
 
   return utils::maxAt(refreshRates);
+}
+
+float roundUp(double value, int decimal_places) {
+    const double multiplier = std::pow(10, decimal_places);
+    return std::round(value * multiplier) / multiplier;
 }
 }  // namespace utils

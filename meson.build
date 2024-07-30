@@ -12,6 +12,7 @@ src = [
   'src/textures.cpp',
   'src/ui.cpp',
   'src/utils.cpp',
+  'src/controls/volume.cpp',
 ]
 
 exe = executable('tiramisu', src,

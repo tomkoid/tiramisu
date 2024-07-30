@@ -25,6 +25,7 @@ std::string join(std::string delimiter,
 }
 int maxAt(std::vector<int>& vector_name);
 int getFramerate();
+double roundUp(double value, int decimal_places);
 }  // namespace utils
 
 #endif  // !UTILS_H

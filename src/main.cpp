@@ -1,4 +1,6 @@
 #include <raylib.h>
+#include <chrono>
+#include <cmath>
 #include <cstdlib>
 #include <format>
 #include <iostream>
@@ -6,6 +8,7 @@
 #include <vector>
 #include "collision.h"
 #include "globals.h"
+#include "src/controls/volume.h"
 #include "textures.h"
 #include "ui.h"
 #include "utils.h"
@@ -51,6 +54,8 @@ int main(int argc, char **argv) {
   screenWidth = SCREEN_HEIGHT;
   screenHeight = SCREEN_HEIGHT;
 
+  bool showVolume = false;
+  std::chrono::steady_clock::time_point showVolumeTimeDone;
   while (!WindowShouldClose()) {
     int screenWidthTmp = GetScreenWidth();
     int screenHeightTmp = GetScreenHeight();
@@ -82,12 +87,7 @@ int main(int argc, char **argv) {
       accel_y = std::abs(accel_y);
 
     // volume control
-    if (IsKeyPressed(KEY_MINUS)) {
-      SetMasterVolume(GetMasterVolume() - 0.1f);
-    }
-    if (IsKeyPressed(KEY_EQUAL)) {
-      SetMasterVolume(GetMasterVolume() + 0.1f);
-    }
+    handleVolumeControls(showVolume, showVolumeTimeDone);
 
     ClearBackground({30, 30, 46, 255});
 
@@ -140,6 +140,13 @@ int main(int argc, char **argv) {
 
     ballPosition.x += accel_x * ((float)BASE_REFRESHRATE / GetFPS());
     ballPosition.y += accel_y * ((float)BASE_REFRESHRATE / GetFPS());
+  }
+
+  if (showVolume && std::chrono::steady_clock::now() < showVolumeTimeDone) {
+    DrawText(std::format("Volume: {:.0f} %", GetMasterVolume() * 100).c_str(),
+             10, 10, FONT_SIZE, {88, 91, 112, 255});
+  } else {
+    showVolume = false;
   }
 
   UnloadSound(bounceSound);
