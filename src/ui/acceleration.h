@@ -2,7 +2,7 @@
 #define ACCELERATION_H
 
 namespace ui {
-void drawAccelerationControls(float& accel_x, float& accel_y);
+void drawAccelerationControls(float &accel_x, float &accel_y);
 }
 
-#endif // !A 
+#endif  // !A

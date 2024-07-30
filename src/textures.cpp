@@ -24,7 +24,7 @@ void preload_direction_textures() {
                                               DIR_ARROW_SIZE, DIR_ARROW_SIZE));
 }
 
-Texture2D* load_direction_texture(Direction dir) {
+Texture2D *load_direction_texture(Direction dir) {
   switch (dir) {
     case Direction::forward:
       return &farrow;
