@@ -10,4 +10,4 @@ int maxAt(std::vector<int> &vector_name) {
   }
   return max;
 }
-} // namespace utils
+}  // namespace utils

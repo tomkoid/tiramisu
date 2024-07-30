@@ -1,8 +1,8 @@
 #ifndef TEXTURES_H
 #define TEXTURES_H
 
-#include "collision.h"
 #include <raylib.h>
+#include "collision.h"
 inline Texture2D farrow;
 inline Texture2D barrow;
 inline Texture2D uarrow;
@@ -12,4 +12,4 @@ Texture2D get_direction_texture(Image image);
 void preload_direction_textures();
 Texture2D *load_direction_texture(Direction dir);
 
-#endif // !TEXTURES_H
+#endif  // !TEXTURES_H

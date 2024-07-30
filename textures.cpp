@@ -1,8 +1,8 @@
 #include "textures.h"
+#include <raylib.h>
+#include <cstddef>
 #include "collision.h"
 #include "globals.h"
-#include <cstddef>
-#include <raylib.h>
 
 Texture2D get_direction_texture(Image image) {
   ImageColorBrightness(&image, 100);
@@ -26,14 +26,14 @@ void preload_direction_textures() {
 
 Texture2D *load_direction_texture(Direction dir) {
   switch (dir) {
-  case Direction::forward:
-    return &farrow;
-  case Direction::backward:
-    return &barrow;
-  case Direction::upward:
-    return &uarrow;
-  case Direction::downward:
-    return &darrow;
+    case Direction::forward:
+      return &farrow;
+    case Direction::backward:
+      return &barrow;
+    case Direction::upward:
+      return &uarrow;
+    case Direction::downward:
+      return &darrow;
   }
 
   return NULL;

@@ -1,11 +1,11 @@
 /*#include <X11/Xlib.h>*/
 /*#include <X11/extensions/Xrandr.h>*/
-#include "utils.h"
-#include <algorithm>
-#include <iostream>
 #include <raylib.h>
 #include <unistd.h>
+/*#include <algorithm>*/
+/*#include <iostream>*/
 #include <vector>
+#include "utils.h"
 
 int get_framerate() {
   /*int num_sizes;*/
@@ -24,14 +24,16 @@ int get_framerate() {
   /**/
   /*int current_width = xrrs[current_size_id].width;*/
   /*int current_height = xrrs[current_size_id].height;*/
-  /*std::cout << "X11: current monitor framerate: " << current_rate << std::endl;*/
+  /*std::cout << "X11: current monitor framerate: " << current_rate <<
+   * std::endl;*/
   /*std::cout << "X11: current monitor width: " << current_width << std::endl;*/
-  /*std::cout << "X11: current monitor height: " << current_height << std::endl;*/
+  /*std::cout << "X11: current monitor height: " << current_height <<
+   * std::endl;*/
   /**/
   /*XCloseDisplay(dpy);*/
 
   std::vector<int> refreshRates;
-  for (int i = 0; i<GetMonitorCount(); i++) {
+  for (int i = 0; i < GetMonitorCount(); i++) {
     refreshRates.push_back(GetMonitorRefreshRate(i));
   }
 

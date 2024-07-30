@@ -1,14 +1,14 @@
+#include <raylib.h>
+#include <cstdlib>
+#include <format>
+#include <iostream>
+#include <string>
+#include <vector>
 #include "collision.h"
 #include "framerate.h"
 #include "globals.h"
 #include "textures.h"
 #include "ui.h"
-#include <cstdlib>
-#include <format>
-#include <iostream>
-#include <raylib.h>
-#include <string>
-#include <vector>
 
 int lastRand = 0;
 
@@ -47,7 +47,6 @@ int main(int argc, char **argv) {
   Wave bounceSoundWave = LoadWave("assets/bounce.wav");
   Sound bounceSound = LoadSoundFromWave(bounceSoundWave);
   std::cout << "preload done." << std::endl;
-
 
   screenWidth = SCREEN_HEIGHT;
   screenHeight = SCREEN_HEIGHT;
@@ -124,7 +123,8 @@ int main(int argc, char **argv) {
       accel_x = increment_speed(accel_x, 0.001);
       accel_y = increment_speed(accel_y, 0.001);
 
-      if (IsAudioDeviceReady() && IsWaveReady(bounceSoundWave) && IsSoundReady(bounceSound)) {
+      if (IsAudioDeviceReady() && IsWaveReady(bounceSoundWave) &&
+          IsSoundReady(bounceSound)) {
         PlaySound(bounceSound);
       }
     }

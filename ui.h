@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include <string>
 #include <vector>
-std::vector<Texture2D> set_ui_direction(std::string *msg, float &accel_x,
+std::vector<Texture2D> set_ui_direction(std::string *msg,
+                                        float &accel_x,
                                         float &accel_y);
-#endif // !UI_H_
+#endif  // !UI_H_

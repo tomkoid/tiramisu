@@ -8,9 +8,9 @@
 
 namespace utils {
 template <class T>
-std::string join(std::string delimiter, typename T::iterator begin,
+std::string join(std::string delimiter,
+                 typename T::iterator begin,
                  typename T::iterator end) {
-
   if (begin == end) {
     return std::string();
   }
@@ -24,6 +24,6 @@ std::string join(std::string delimiter, typename T::iterator begin,
       });
 }
 int maxAt(std::vector<int> &vector_name);
-} // namespace utils
+}  // namespace utils
 
-#endif // !UTILS_H
+#endif  // !UTILS_H

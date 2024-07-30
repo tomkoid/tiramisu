@@ -1,12 +1,13 @@
-#include "textures.h"
-#include "utils.h"
-#include "collision.h"
-#include <format>
 #include <raylib.h>
+#include <format>
 #include <string>
 #include <vector>
+#include "collision.h"
+#include "textures.h"
+#include "utils.h"
 
-std::vector<Texture2D> set_ui_direction(std::string *msg, float &accel_x,
+std::vector<Texture2D> set_ui_direction(std::string *msg,
+                                        float &accel_x,
                                         float &accel_y) {
   std::vector<std::string> direction;
   std::vector<Texture2D> ui_arrow_textures;
@@ -33,4 +34,3 @@ std::vector<Texture2D> set_ui_direction(std::string *msg, float &accel_x,
 
   return ui_arrow_textures;
 }
-
