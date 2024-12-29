@@ -1,13 +1,8 @@
-#ifndef VOLUME_H
-#define VOLUME_H
+#pragma once
 
 #include <raylib.h>
 #include <chrono>
 
 namespace controls {
-void handleVolumeControls(
-    bool &showVolume,
-    std::chrono::time_point<std::chrono::steady_clock> &showVolumeTimeDone);
+  void handleVolumeControls(bool& showVolume, std::chrono::time_point<std::chrono::steady_clock>& showVolumeTimeDone);
 }
-
-#endif  // !VOLUME_H

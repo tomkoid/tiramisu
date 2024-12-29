@@ -1,10 +1,7 @@
-#ifndef BOUNCES_H
-#define BOUNCES_H
+#pragma once
 
 #include <raylib.h>
 
 namespace ui {
-void drawBounces(int wall_bounces);
+  void drawBounces(int wall_bounces);
 }
-
-#endif  // !B

@@ -1,10 +1,7 @@
-#ifndef VOLUMEUI_H
-#define VOLUMEUI_H
+#pragma once
 
 #include <raylib.h>
 
 namespace ui {
-void drawVolume();
+  void drawVolume();
 }
-
-#endif  // !VOL
