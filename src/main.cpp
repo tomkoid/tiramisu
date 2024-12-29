@@ -29,16 +29,16 @@ float increment_speed(float accel_var, float accel_adder) {
   }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   if (argc != 1) {
     std::cout << argv[0] << "takes no arguments.\n";
     return 1;
   }
 
-  int framerate = utils::getFramerate();
-  std::string msg = "== first, frame ==";
-  float accel_x = 4.0;
-  float accel_y = 4.0;
+  int framerate    = utils::getFramerate();
+  std::string msg  = "== first, frame ==";
+  float accel_x    = 4.0;
+  float accel_y    = 4.0;
   int wall_bounces = 0;
 
   Vector2 ballPosition = {(float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2};
@@ -52,16 +52,16 @@ int main(int argc, char **argv) {
   preload_direction_textures();
 
   Wave bounceSoundWave = LoadWave("assets/bounce.wav");
-  Sound bounceSound = LoadSoundFromWave(bounceSoundWave);
+  Sound bounceSound    = LoadSoundFromWave(bounceSoundWave);
   std::cout << "preload done." << std::endl;
 
-  screenWidth = SCREEN_HEIGHT;
+  screenWidth  = SCREEN_HEIGHT;
   screenHeight = SCREEN_HEIGHT;
 
   bool showVolume = false;
   std::chrono::steady_clock::time_point showVolumeTimeDone;
   while (!WindowShouldClose()) {
-    int screenWidthTmp = GetScreenWidth();
+    int screenWidthTmp  = GetScreenWidth();
     int screenHeightTmp = GetScreenHeight();
 
     if (screenWidthTmp != screenWidth) {
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
 
     if (screenWidthTmp != screenWidth || screenHeightTmp != screenHeight) {
       SetWindowSize(screenWidthTmp, screenHeightTmp);
-      screenWidth = screenWidthTmp;
+      screenWidth  = screenWidthTmp;
       screenHeight = screenHeightTmp;
     }
 
@@ -99,13 +99,12 @@ int main(int argc, char **argv) {
 
     EndDrawing();
 
-    bool collided = collision(&ballPosition, wall_bounces, accel_x, accel_y);
+    bool collided                 = collision(&ballPosition, wall_bounces, accel_x, accel_y);
     std::vector<Texture2D> arrows = set_ui_direction(&msg, accel_x, accel_y);
 
     int i = 0;
     for (Texture2D arrow : arrows) {
-      DrawTexture(arrow, widget_offset + widget_gap * i, 10,
-                  {137, 180, 250, 255});
+      DrawTexture(arrow, widget_offset + widget_gap * i, 10, {137, 180, 250, 255});
       i++;
     }
 
@@ -128,8 +127,7 @@ int main(int argc, char **argv) {
       accel_x = increment_speed(accel_x, 0.001);
       accel_y = increment_speed(accel_y, 0.001);
 
-      if (IsAudioDeviceReady() && IsWaveReady(bounceSoundWave) &&
-          IsSoundReady(bounceSound)) {
+      if (IsAudioDeviceReady()) {
         PlaySound(bounceSound);
       }
     }
